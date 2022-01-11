@@ -1,31 +1,26 @@
 const express = require('express');
 const router  = express.Router();
-const { Pool } = require("pg");
 
-const pool = new Pool({
-  user: "labber",
-  password: "123",
-  host: "localhost",
-  database: "midterm",
-});
+// Brows menu
+module.exports = (db) => {
+  router.get("/", (req, res) => {
+      db.query(`
+      SELECT * FROM food_items;
+      `)
+      .then(data => {
+        const foodItems = data.rows;
+        res.render('food_items', {foodItems});
+      })
+      .catch(e => {
+        res.render('food_items', {"error" : e})
+      })
+  });
 
-router.get('/',(req, res) => {
-    pool.query(`
-    SELECT * FROM food_items;
-    `)
-    .then(sqlResult => {
-      let templateVars = JSON.stringify(sqlResult);
-      res.render('food_items', { templateVars });
-    })
-    .catch(e => {
-      res.render('food_items', {templateVars: "error" + e})
-    })
-});
+  // router.post('/food_items/:id', (req, res) => {
 
-router.post('/food_items/:id', (req, res) => {
+  //   res.redirect('food_items')
+  // });
 
-  res.redirect('food_items')
-});
+  return router;
+}
 
-
-module.exports = router;
