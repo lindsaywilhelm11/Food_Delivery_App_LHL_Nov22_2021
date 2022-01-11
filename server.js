@@ -42,9 +42,6 @@ const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const adminRoutes = require("./routes/admin_orders");
 const foodItemsRoutes = require("./routes/food_items");
-
-
-
 const aboutRoutes = require("./routes/about");
 const loginRoutes = require("./routes/login");
 

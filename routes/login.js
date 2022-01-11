@@ -1,14 +1,16 @@
 const express = require('express');
 const router  = express.Router();
+const cookie = require("cookie-parser");
 
-router.get("/", (req, res) => {
-  let cookie = res.cookie('user_id', req.params.id)
-  if (cookie) {
-    res.redirect("./food_items")
-  }
 
+router.get('/', (req, res) => {
+  res.render("login")
 });
 
+router.post('/', (req, res) => {
+  res.cookie('name', req.params.name)
+  res.redirect("/")
+})
 
 module.exports = router;
 
