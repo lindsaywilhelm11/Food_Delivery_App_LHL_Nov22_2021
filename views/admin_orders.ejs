@@ -16,9 +16,16 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
-  <div><%= sqlResult %></div>
-  
+  <div class="orders-wrapper">
+    <% for(let order of adminOrders) { %>
+      <div class="order-information">
+        <h5 class="order-id"><%= order.order_id %></h>
+        <p class="food-item-id"><%= order.food_item_id %></p>
+        <p class="quantity"><%= order.quantity %></p>
+      </div>
+    <% } %>
+  </div>
+
 </body>
 
 </html>
