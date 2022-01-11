@@ -15,19 +15,18 @@
 
 <body>
   <div class="item-wrapper">
-    <a href="/carts">see cart</a>
-    <% for(let item of foodItems) { %>
+    <a href="/food_items">see menu</a>
+    <% if (cartItems.length === 0) { %>
+      <p class="empty">You did not put any items in the cart yet.</p>
+    <% } %>
+    <% for(let item of cartItems) { %>
       <div class="food-item">
         <div class="item-information">
-          <h5 class="name"><%= item.name %></h>
-          <p class="desc"><%= item.description %></p>
+          <h5 class="name"><%= item.name %></h5>
           <p class="price">$<%= item.price %></p>
+          <p class="quantity">quantity: <%= item.quantity %></p>
         </div>
         <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
-        <form method="post" action="/carts">
-          <input type="hidden" name="food_item_id" class="food-item-id-to-cart" value="<%= item.id %>" />
-          <button type="submit" class="add-button">add</button>
-        </form>
       </div>
     <% } %>
   </div>

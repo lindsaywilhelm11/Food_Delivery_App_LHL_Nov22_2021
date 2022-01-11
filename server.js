@@ -1,5 +1,6 @@
 // load .env data into process.env
 require("dotenv").config();
+const session = require('express-session');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -7,6 +8,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cookieParser = require('cookie-parser')
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -21,6 +23,12 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
 app.use(
   "/styles",
@@ -31,14 +39,20 @@ app.use(
   })
 );
 
+
 app.use(express.static("public"));
+app.use(cookieParser())
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-// const usersRoutes = require("./routes/users");
-// const widgetsRoutes = require("./routes/widgets");
+const usersRoutes = require("./routes/users");
+const widgetsRoutes = require("./routes/widgets");
 const adminRoutes = require("./routes/admin_orders");
 const foodItemsRoutes = require("./routes/food_items");
+const cartsRoutes = require("./routes/carts");
+const aboutRoutes = require("./routes/about");
+const loginRoutes = require("./routes/login");
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -46,6 +60,13 @@ const foodItemsRoutes = require("./routes/food_items");
 // app.use("/api/widgets", widgetsRoutes(db));
 app.use("/admin_orders", adminRoutes);
 app.use("/food_items", foodItemsRoutes);
+app.use("/about", aboutRoutes);
+app.use("/login", loginRoutes);
+app.use("/api/users", usersRoutes(db));
+app.use("/api/widgets", widgetsRoutes(db));
+app.use("/admin_orders", adminRoutes(db));
+app.use("/food_items", foodItemsRoutes(db));
+app.use("/carts", cartsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page

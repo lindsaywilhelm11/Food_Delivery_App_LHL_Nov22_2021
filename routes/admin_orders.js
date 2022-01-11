@@ -1,31 +1,46 @@
 const express = require('express');
 const router  = express.Router();
-const { Pool } = require("pg");
 
-const pool = new Pool({
-  user: "labber",
-  password: "123",
-  host: "localhost",
-  database: "midterm",
-});
+// Show customer orders to the browser
+module.exports = (db) => {
+  router.get("/",(req, res) => {
+      db.query(`
+      SELECT * FROM orders_details;
+      `)
+      .then(data => {
+        const adminOrders = data.rows;
+        res.render('admin_orders', { adminOrders })
+      })
+      .catch(e => {
+        res.render('admin_orders', {"error" : e})
+      })
+  });
 
-router.get('/',(req, res) => {
-    pool.query(`
-    SELECT * FROM orders_details;
-    `)
-    .then(sqlResult => {
-      let templateVars = JSON.stringify(sqlResult);
-      res.render('admin_orders', { templateVars })
-    })
-    .catch(e => {
-      res.render('admin_orders', {sqlResult: "error" + e})
-    })
-});
+  // Recieve form data from item_new.ejs
+  // router.post("/", (req, res) => {
+  //   const name = ;
+  //   const price = ;
+  //   const desc = ;
+  //   const image = ;
+  //   res.redirect("/food_items");
+  // });
 
-router.post('/admin_orders/:id', (req, res) => {
+  // Show "create new item form" page to the browser
+  router.get("/items/new", (req, res) => {
+    const templateVars = {
+      user: users[req.session["user_id"]],
+    };
+    if (!req.session.user_id) {
+      res.redirect("/login");
+    } else {
+      res.render("item_new", templateVars);
+    }
+  });
 
-  res.redirect('admin_orders')
-});
+  return router;
+};
 
 
-module.exports = router;
+
+
+
