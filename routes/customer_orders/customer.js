@@ -11,22 +11,59 @@ const pool = new Pool({
 
 // app.use('/user/:id', function (req, res, next) {   console.log('Request Type:', req.method)
 
-router.get('/user/:id', function (req, res) => {
-  if (req.params.id === '0')
-  else ()
-}, function (req, res,) {
-  // render a regular page
-  res.render('regular')
-  pool:query(`
-    SELECT * FROM orders_details;
-    `)
-    .then(sqlResult => {
-      let templateVars = JSON.stringify(sqlResult);
-      res.render('orders_details', { templateVars });
+// Cart
+module.exports = (db) => {
+  router.get("/", (req, res) => {
+    const customer_orders = req.session.customer_orders|| {};
+    const id1 = Object.keys(customer_orders);
+    const customer_orders = [];
+    console.log(id1)
+    if (id1.length === 0) {
+      return res.render('customer_orders', {
+        customer_orders,
+      })
+    }
+    db.query(`
+      SELECT * FROM food_items WHERE id in (${id1.join(',')})
+      `)
+      .then(data => {
+        console.log(123)
+        for (const item of data.rows) {
+          const quantity = req.session.customer_orders[item.id1];
+          console.log(quantity)
+          customer_orders.push(
+            Object.assign({}, item, { quantity })
+          );
+        }
+        res.render('customer_order', {
+          customer_orders,
+        });
+      })
+      .catch(e => {
+        console.log(e);
+        res.render('customer_order', {
+          customer_orders,
+          "error" : e,
+        })
+      })
+  });
 
+  router.post("/", (req, res) => {
+    let customer_orders = {};
+    if (req.session.cart) {
+      customer_orders = req.session.customer_orders;
+    }
+    if (!customer_orders[req.body.food_item_id]) {
+      customer_orders[req.body.food_item_id] = 0;
+    }
+    customer_orders[req.body.food_item_id]++;
+    req.session.customer_orders = customer_orders;
+    res.redirect('food_items');
+  });
+  return router;
 }
 
-})
+
 
 router.post("/edit", function (req, res) => {
 
@@ -36,7 +73,7 @@ router.post("/edit", function (req, res) => {
 }
 
 
-router.post("/add",customer_orders (req, res) => {
+
 
 
 
