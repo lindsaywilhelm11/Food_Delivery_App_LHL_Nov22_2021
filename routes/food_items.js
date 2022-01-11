@@ -15,14 +15,12 @@ module.exports = (db) => {
         res.render('food_items', {"error" : e})
       })
   });
+
+  // router.post('/food_items/:id', (req, res) => {
+
+  //   res.redirect('food_items')
+  // });
+
   return router;
 }
 
-// Restaurant Add an new item
-// router.post('/food_items/:id', (req, res) => {
-
-//   res.redirect('food_items')
-// });
-
-
-// module.exports = router;

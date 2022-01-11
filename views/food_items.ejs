@@ -16,14 +16,19 @@
 <body>
   <div class="item-wrapper">
     <% for(let item of foodItems) { %>
-      <div class="item-information">
-        <h5 class="name"><%= item.name %></h>
-        <p class="desc"><%= item.description %></p>
-        <p class="price">$<%= item.price %></p>
+      <div class="food-item">
+        <div class="item-information">
+          <h5 class="name"><%= item.name %></h>
+          <p class="desc"><%= item.description %></p>
+          <p class="price">$<%= item.price %></p>
+        </div>
+        <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
+        <input type="hidden" class="food-item-id-to-cart" value="<%= item.id %>" />
+        <button type="button" class="add-button">add</button>
       </div>
-      <img class='item-image' src='<%= item.image %>'/>
     <% } %>
   </div>
+
 </body>
 
 </html>
