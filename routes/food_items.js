@@ -9,18 +9,16 @@ module.exports = (db) => {
       `)
       .then(data => {
         const foodItems = data.rows;
-        res.render('food_items', {foodItems});
+        console.log(req.session.cart);
+        res.render('food_items', {
+          foodItems,
+          cart: req.session.cart,
+        });
       })
       .catch(e => {
         res.render('food_items', {"error" : e})
       })
   });
 
-  // router.post('/food_items/:id', (req, res) => {
-
-  //   res.redirect('food_items')
-  // });
-
   return router;
 }
-
