@@ -1,6 +1,5 @@
 const express = require('express');
 const router  = express.Router();
-const cookie = require("cookie-parser");
 
 
 router.get('/', (req, res) => {
