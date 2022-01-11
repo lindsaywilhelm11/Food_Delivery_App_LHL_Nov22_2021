@@ -14,12 +14,22 @@ module.exports = (db) => {
         res.render('admin_orders', {"error" : e})
       })
   });
+
+  // router.post("/", (req, res) => {
+  //   const name = ;
+  //   const price = ;
+  //   const desc = ;
+  //   const image = ;
+  //   res.redirect("/food_items");
+  // });
+
   return router;
 };
 
-// router.post('/admin_orders/:id', (req, res) => {
+// router.get("/admin", (req, res) => {
 
-//   res.redirect('admin_orders')
+//     res.render("item_new", templateVars);
 // });
+
 
 

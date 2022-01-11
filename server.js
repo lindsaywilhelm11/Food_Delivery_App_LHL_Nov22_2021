@@ -1,5 +1,6 @@
 // load .env data into process.env
 require("dotenv").config();
+const session = require('express-session');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -21,6 +22,12 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
 app.use(
   "/styles",
@@ -39,6 +46,7 @@ const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const adminRoutes = require("./routes/admin_orders");
 const foodItemsRoutes = require("./routes/food_items");
+const cartsRoutes = require("./routes/carts");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -46,6 +54,7 @@ app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/admin_orders", adminRoutes(db));
 app.use("/food_items", foodItemsRoutes(db));
+app.use("/carts", cartsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
