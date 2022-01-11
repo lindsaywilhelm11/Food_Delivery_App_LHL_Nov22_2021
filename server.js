@@ -7,6 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cookieParser = require('cookie-parser')
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -31,7 +32,9 @@ app.use(
   })
 );
 
+
 app.use(express.static("public"));
+app.use(cookieParser())
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -40,12 +43,20 @@ app.use(express.static("public"));
 const adminRoutes = require("./routes/admin_orders");
 const foodItemsRoutes = require("./routes/food_items");
 
+
+
+const aboutRoutes = require("./routes/about");
+const loginRoutes = require("./routes/login");
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 app.use("/admin_orders", adminRoutes);
 app.use("/food_items", foodItemsRoutes);
+
+app.use("/about", aboutRoutes);
+app.use("/login", loginRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
