@@ -1,13 +1,5 @@
 const express = require('express');
 const router  = express.Router();
-const { Pool } = require("pg");
-
-const pool = new Pool({
-  user: "labber",
-  password: "labber",
-  host: "localhost",
-  database: "midterm",
-});
 
 // app.use('/user/:id', function (req, res, next) {   console.log('Request Type:', req.method)
 
