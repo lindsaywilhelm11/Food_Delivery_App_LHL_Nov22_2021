@@ -14,18 +14,16 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
-  <div><%= templateVars %></div>
-
-  <div class="menu-wrapper">
-    <% for(let i = 0; i < templateVars.length; i++) { %>
-      <h5 class="name">"<%= templateVars[i].name %>"</h>
-      <p class="disc">"<%= templateVars[i].description %>"</p>
-      <p class="price">"<%= templateVars[i].price %>"</p>
-      <img src="<%= templateVars[i].image %>">
+  <div class="item-wrapper">
+    <% for(let item of foodItems) { %>
+      <div class="item-information">
+        <h5 class="name"><%= item.name %></h>
+        <p class="desc"><%= item.description %></p>
+        <p class="price">$<%= item.price %></p>
+      </div>
+      <img class='item-image' src='<%= item.image %>'/>
     <% } %>
   </div>
-  <button class='add-item' class='submit'>Add Item</button>
 </body>
 
 </html>

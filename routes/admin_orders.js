@@ -1,31 +1,25 @@
 const express = require('express');
 const router  = express.Router();
-const { Pool } = require("pg");
 
-const pool = new Pool({
-  user: "labber",
-  password: "123",
-  host: "localhost",
-  database: "midterm",
-});
+module.exports = (db) => {
+  router.get("/",(req, res) => {
+      db.query(`
+      SELECT * FROM orders_details;
+      `)
+      .then(data => {
+        const adminOrders = data.rows;
+        res.render('admin_orders', { adminOrders })
+      })
+      .catch(e => {
+        res.render('admin_orders', {"error" : e})
+      })
+  });
+  return router;
+};
 
-router.get('/',(req, res) => {
-    pool.query(`
-    SELECT * FROM orders_details;
-    `)
-    .then(sqlResult => {
-      let templateVars = JSON.stringify(sqlResult);
-      res.render('admin_orders', { templateVars })
-    })
-    .catch(e => {
-      res.render('admin_orders', {sqlResult: "error" + e})
-    })
-});
+// router.post('/admin_orders/:id', (req, res) => {
 
-router.post('/admin_orders/:id', (req, res) => {
-
-  res.redirect('admin_orders')
-});
+//   res.redirect('admin_orders')
+// });
 
 
-module.exports = router;
