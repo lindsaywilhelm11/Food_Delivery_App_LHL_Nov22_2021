@@ -40,7 +40,7 @@ app.use(
   })
 );
 
-app.use("/public", express.static('public'));
+app.use(express.static('public'));
 app.use(cookieParser())
 
 // Separated Routes for each Resource
