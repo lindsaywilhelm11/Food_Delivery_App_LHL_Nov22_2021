@@ -54,7 +54,7 @@ const aboutRoutes = require("./routes/about");
 const loginRoutes = require("./routes/login");
 const orderRoutes = require("./routes/order");
 const smsRoutes = require("./routes/sms");
-const customer_ordersRoutes = require("./routes/customer_orders/customer");
+const customer_ordersRoutes = require("./routes/customer_orders/customer_orders");
 
 
 // Mount all resource routes
