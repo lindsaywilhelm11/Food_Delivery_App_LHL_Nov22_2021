@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-  <title>Admin Page</title>
+  <title>Admin Check Order Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="/styles/main.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -16,19 +16,56 @@
 </head>
 
 <body>
-  <div class="orders-wrapper">
-    <% for(let order of adminOrders) { %>
-      <div class="order-information">
-        <h5 class="order-id"><%= order.order_id %></h>
-        <p class="food-item-id"><%= order.food_item_id %></p>
-        <p class="quantity"><%= order.quantity %></p>
-      </div>
-    <% } %>
-
-
-    
+  <div class="header">
+    <a class="link" href="admin_orders/newitem">Create New Item</a>
   </div>
+  <div class="orders-wrapper">
+    <%#= error %>
+    <% for(let order of adminOrders) { %>
+    <div class="order-information">
+      <h4 class="order-header">
+        <span class="order-id"><%= order.id %></span>
+        <span class="order-status"><%= order.status %></span>
+        <span class="order-name"><%= order.name %></span>
+        <span class="order-time"><%= order.time %></span>
+        <span class="order-totalprice">$<%= order.totalprice %></span>
+      </h4>
+      <% for(let item of order.items) { %>
+      <div class="food-detail">
+        <span class="food-item-name"><%= item.itemname %></span>
+        <span class="quantity"><%= item.quantity%></span>
+      </div>
+      <% } %>
+    </div>
+    <select name="status">
+      <option value="new">NEW</option>
+      <option value="prep">PREPARING</option>
+      <option value="ready">READY!!</option>
+      <option value="comp">COMPLETE</option>
+    </select>
+    <% } %>
+  </div>
+  <style>
+    .order-information {
+      border: solid 1px #ccc;
+      padding: 10px;
+    }
 
+    .order-information .order-header {
+      margin: 0;
+      border-bottom: solid 1px;
+      width: 18em;
+    }
+
+    .food-detail {
+      margin-left: 1em;
+    }
+
+    .food-detail .food-item-name {
+      display: inline-block;
+      width: 12em;
+    }
+  </style>
 </body>
 
 </html>
