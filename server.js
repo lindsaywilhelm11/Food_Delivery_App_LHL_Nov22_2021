@@ -11,6 +11,7 @@ const morgan = require("morgan");
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
+
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
@@ -42,7 +43,7 @@ app.use(
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -63,7 +64,6 @@ const thankYouRoutes = require("./routes/thank_you");
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 
-app.use("/admin_orders", adminRoutes);
 app.use("/about", aboutRoutes);
 app.use("/login", loginRoutes);
 app.use("/admin_orders", adminRoutes(db));
