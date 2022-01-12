@@ -61,7 +61,6 @@ const smsRoutes = require("./routes/sms");
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
 app.use("/admin_orders", adminRoutes);
-app.use("/food_items", foodItemsRoutes);
 app.use("/about", aboutRoutes);
 app.use("/login", loginRoutes);
 app.use("/api/users", usersRoutes(db));
