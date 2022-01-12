@@ -4,7 +4,7 @@ const router = express.Router();
 // Show customer orders to the browser
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    // ヘッダーを取得
+    // Obtain header information from SQL
     db.query(`
       SELECT orders.id, users.name, date, total_cost, status
       FROM orders
@@ -14,7 +14,7 @@ module.exports = (db) => {
       `)
       .then(headerSqlResultInfo => {
         const headerSqlResult = headerSqlResultInfo.rows;
-        // 詳細のSQL
+        // SQL details
         const sqlPromiseList = [];
         for (const header of headerSqlResult) {
           sqlPromiseList.push(db.query(`
@@ -27,15 +27,15 @@ module.exports = (db) => {
 
         Promise.all(sqlPromiseList).then(allResultInfos => {
           const allDetails = allResultInfos.map(allResultInfo => allResultInfo.rows);
-          // 全部終わったら全部の結果が帰ってくる
+          // Mayu note : 全部終わったら全部の結果が帰ってくる 
           // const adminOrders = data.rows;
           let adminOrders = [];
-          // 2022-01-10 11:41:30.559891
           for (let i = 0; i < headerSqlResult.length; i++) {
             const header = headerSqlResult[i];
             adminOrders.push({
               id: header.id,
               name: header.name,
+              // 2022-01-10 11:41:30.559891 -> 11:41
               time: header.date.toString().split(' ')[4].slice(0,5),
               totalprice: header.total_cost,
               status: header.status,
@@ -58,18 +58,21 @@ module.exports = (db) => {
   });
 
   // Recieve form data from item_new.ejs
-  // router.post("/", (req, res) => {
-  //   const name = ;
-  //   const price = ;
-  //   const desc = ;
-  //   const image = ;
-  //   res.redirect("/food_items");
-  // });
+  router.post("/", (req, res) => {
+    const name = req.body.new_item_name;
+    const price = req.body.new_item_price;
+    const desc = req.body.new_item_description;
+    const image = req.body.new_item_image;
+    if (!name || !price || !desc || !image) {
+      console.log("Please filled all form:)")
+    }
+    
+    res.redirect("/food_items");
+  });
 
   // Show "create new item form" page to the browser
   router.get("/newitem", (req, res) => {
-    const newItem =
-      res.render("item_new");
+    res.render("item_new");
   });
 
   // どのorderをupdateするのか判断するためにorder id受け取んないといけない
