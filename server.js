@@ -8,8 +8,13 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+<<<<<<< HEAD
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+=======
+const cookieParser = require('cookie-parser');
+
+>>>>>>> 9d46cb979ff159a2fca5b984b912902c738d117f
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -40,8 +45,12 @@ app.use(
   })
 );
 
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
+=======
+app.use(express.static('public'));
+>>>>>>> 9d46cb979ff159a2fca5b984b912902c738d117f
 app.use(cookieParser())
 
 // Separated Routes for each Resource
@@ -55,17 +64,28 @@ const aboutRoutes = require("./routes/about");
 const loginRoutes = require("./routes/login");
 const orderRoutes = require("./routes/order");
 const smsRoutes = require("./routes/sms");
+const customer_ordersRoutes = require("./routes/customer_orders/customer_orders");
 
 
+
+const thankYouRoutes = require("./routes/thank_you");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
 // app.use("/api/widgets", widgetsRoutes(db));
+<<<<<<< HEAD
+=======
+app.use("/admin_orders", adminRoutes);
+app.use("/about", aboutRoutes);
+>>>>>>> 9d46cb979ff159a2fca5b984b912902c738d117f
 app.use("/login", loginRoutes);
 app.use("/admin_orders", adminRoutes(db));
 app.use("/food_items", foodItemsRoutes(db));
 app.use("/order", orderRoutes);
 app.use("/carts", cartsRoutes(db));
+app.use("/thank_you", thankYouRoutes);
+app.use("/customer_orders", customer_ordersRoutes(db));
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
