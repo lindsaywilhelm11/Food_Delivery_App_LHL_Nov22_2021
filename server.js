@@ -9,6 +9,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -39,7 +40,7 @@ app.use(
   })
 );
 
-
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static("public"));
 app.use(cookieParser())
 

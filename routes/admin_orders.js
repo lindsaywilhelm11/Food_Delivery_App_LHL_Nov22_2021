@@ -58,14 +58,14 @@ module.exports = (db) => {
   });
 
   // Recieve form data from item_new.ejs
-  router.post("/", (req, res) => {
-    const name = req.body.new_item_name;
-    const price = req.body.new_item_price;
-    const desc = req.body.new_item_description;
-    const image = req.body.new_item_image;
-    if (!name || !price || !desc || !image) {
-      console.log("Please filled all form:)")
-    }
+  router.post("/newitem", (req, res) => {
+    // const name = req.body.new_item_name;
+    // const price = req.body.new_item_price;
+    // const desc = req.body.new_item_description;
+    // const image = req.body.new_item_image;
+    // if (!name || !price || !desc || !image) {
+    //   console.log("Please filled all form:)")
+    // }
     
     res.redirect("/food_items");
   });
