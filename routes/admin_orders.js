@@ -6,9 +6,11 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     // ヘッダーを取得
     db.query(`
-      SELECT orders.id, users.name, date, total_cost 
+      SELECT orders.id, users.name, date, total_cost, status
       FROM orders
       JOIN users ON user_id = users.id
+      WHERE status != 'complete'
+      ORDER BY date DESC;
       `)
       .then(headerSqlResultInfo => {
         const headerSqlResult = headerSqlResultInfo.rows;
@@ -36,33 +38,14 @@ module.exports = (db) => {
               name: header.name,
               time: header.date.toString().split(' ')[4].slice(0,5),
               totalprice: header.total_cost,
+              status: header.status,
               items: allDetails[i].map(sqlResult => ({
                 itemname: sqlResult.name,
                 quantity: sqlResult.quantity
               }))
             })
           }
-          // adminOrders = [{
-          //     id: 1,
-          //     name: 'Steve',
-          //     time: '12:15',
-          //     totalprice: '5',
-          //     items: [
-          //       {
-          //         itemname: 'latte',
-          //         quantity: 1
-          //       },
-          //       {
-          //         itemname: 'cappuccino',
-          //         quantity: 2
-          //       },
-          //       {
-          //         itemname: 'green tea flapetino',
-          //         quantity: 1
-          //       },
-          //     ]
-          //   }
-          // ];
+          
           res.render('admin_orders', { adminOrders })
         })
         .catch(e => {

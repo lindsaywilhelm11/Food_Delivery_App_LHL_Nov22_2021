@@ -17,37 +17,15 @@
 
 <body>
   <div class="header">
-    <a class="link" href="/newitem">Create New Item</a>
+    <a class="link" href="admin_orders/newitem">Create New Item</a>
   </div>
   <div class="orders-wrapper">
-    <!-- 完成イメージ -->
-    <!-- <div class="order-information">
-      <h4 class="order-header">
-        <span class="order-id">1</span>
-        <span class="order-name">Steve</span>
-        <span class="order-datetime">12:15</span>
-        <span class="order-totalprice">$5</span>
-      </h4>
-      <div class="food-detail">
-        <span class="food-item-name">latte</span>
-        <span class="quantity">1</span>
-      </div>
-      <div class="food-detail">
-        <span class="food-item-name">cappuccino</span>
-        <span class="quantity">2</span>
-      </div>
-      <div class="food-detail">
-        <span class="food-item-name">green tea flapetino</span>
-        <span class="quantity">2</span>
-      </div>
-    </div> -->
-
     <%#= error %>
-    <!-- 実際の表示コード -->
     <% for(let order of adminOrders) { %>
     <div class="order-information">
       <h4 class="order-header">
         <span class="order-id"><%= order.id %></span>
+        <span class="order-status"><%= order.status %></span>
         <span class="order-name"><%= order.name %></span>
         <span class="order-time"><%= order.time %></span>
         <span class="order-totalprice">$<%= order.totalprice %></span>
@@ -59,6 +37,12 @@
       </div>
       <% } %>
     </div>
+    <select name="status">
+      <option value="new">NEW</option>
+      <option value="prep">PREPARING</option>
+      <option value="ready">READY!!</option>
+      <option value="comp">COMPLETE</option>
+    </select>
     <% } %>
   </div>
   <style>
@@ -70,7 +54,7 @@
     .order-information .order-header {
       margin: 0;
       border-bottom: solid 1px;
-      width: 15em;
+      width: 18em;
     }
 
     .food-detail {
