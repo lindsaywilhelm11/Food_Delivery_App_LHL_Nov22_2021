@@ -3,39 +3,19 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  router.get("/", (req, res) => {
-    const customer_orders = req.session.customer_orders|| {};
-    const id1 = Object.keys(customer_orders);
-    console.log(id1)
-    if (id1.length === 0) {
-      return res.render('customer_orders', {
-        customer_orders,
-      })
-    }
+  router.get("/",(req, res) => {
     db.query(`
-      SELECT * FROM food_items WHERE id in (${id1.join(',')})
-      `)
-      .then(data => {
-        console.log(123)
-        for (const item of data.rows) {
-          const quantity = req.session.customer_orders[item.id1];
-          console.log(quantity)
-          customer_orders.push(
-            Object.assign({}, item, { quantity })
-          );
-        }
-        res.render('customer_orders', {
-          customer_orders,
-        });
-      })
-      .catch(e => {
-        console.log(e);
-        res.render('customer_orders', {
-          customer_orders,
-          "error" : e,
-        })
-      })
-  });
+    SELECT * FROM orders_details;
+    `)
+    .then(data => {
+      const customerOrders = data.rows;
+      res.render('customer_orders', { customerOrders })
+    })
+    .catch(e => {
+      res.render('customer_orders', {"error" : e})
+    })
+});
+
   router.post("/", (req, res) => {
     let customer_orders = {};
     if (req.session.cart) {
@@ -51,23 +31,22 @@ module.exports = (db) => {
   router.post("/edit", (req, res) => {
   });
 
-  router.post("/delete", (req, res) => {
-    if (users[req.session.id1]) {
-      userURL = urlsForUser(users[req.session.id1].id, urlDatabase);
-      if (Object.keys(userURL).includes(req.params.users)) {
-        const users = req.params.users;
-        delete urlDatabase[users];
-        res.redirect("/urls");
-      } else {
-        res.status(401).send("Not Authorized to delete this shortURL");
-      }
-    } else {
-      res
-        .status(401)
-        .send("Not allowed to delete without login <br/><a href='/login'> Login here</a>");
-    }
-  })
+  router.post("customer_orders/:itemId/delete", (req, res) => {
+    const query = `DELETE from customer_ordersId where order_id = $1 AND food_id = $2; `;
+    const {customer_ordersId, itemId} = req.params;
+
+    db.query(query, [customer_ordersId, itemId])
+      .then((data) => {
+      // check if order doesn't exist
+        if (data.rows.length === 0) {
+          return res.status(404).send();
+        }
+        res.redirect('/cart');
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
+  });
 
   return router;
 };
-
