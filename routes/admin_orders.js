@@ -59,15 +59,21 @@ module.exports = (db) => {
 
   // Recieve form data from item_new.ejs
   router.post("/newitem", (req, res) => {
-    // const name = req.body.new_item_name;
-    // const price = req.body.new_item_price;
-    // const desc = req.body.new_item_description;
-    // const image = req.body.new_item_image;
-    // if (!name || !price || !desc || !image) {
-    //   console.log("Please filled all form:)")
-    // }
-    
-    res.redirect("/food_items");
+    const name = req.body.new_item_name;
+    const price = req.body.new_item_price;
+    const desc = req.body.new_item_description;
+    const image = req.body.new_item_image;
+    db.query (`
+    INSERT INTO food_items (name, price, description, image)
+    VALUES ($1, $2, $3, $4);
+    `, [name, price, desc, image])
+    .then(data => {
+      console.log(data);
+      res.redirect("/food_items");
+    }) 
+    .catch(error =>{
+      res.status(500).json({error: error.message})
+    })
   });
 
   // Show "create new item form" page to the browser
