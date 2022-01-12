@@ -8,7 +8,8 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -39,8 +40,7 @@ app.use(
   })
 );
 
-
-app.use(express.static("public"));
+app.use(express.static('public'));
 app.use(cookieParser())
 
 // Separated Routes for each Resource
@@ -57,6 +57,8 @@ const smsRoutes = require("./routes/sms");
 const customer_ordersRoutes = require("./routes/customer_orders/customer_orders");
 
 
+
+const thankYouRoutes = require("./routes/thank_you");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api/users", usersRoutes(db));
@@ -70,6 +72,7 @@ app.use("/admin_orders", adminRoutes(db));
 app.use("/food_items", foodItemsRoutes(db));
 app.use("/order", orderRoutes);
 app.use("/carts", cartsRoutes(db));
+app.use("/thank_you", thankYouRoutes);
 app.use("/customer_orders", customer_ordersRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
