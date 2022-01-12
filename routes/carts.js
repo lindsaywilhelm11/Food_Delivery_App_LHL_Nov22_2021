@@ -37,7 +37,6 @@ module.exports = (db) => {
         })
       })
   });
-
   router.post("/", (req, res) => {
     let cart = {};
     if (req.session.cart) {
@@ -52,4 +51,24 @@ module.exports = (db) => {
   });
   return router;
 }
+
+
+router.post("/orderId/:item_id/delete", (req, res) => {
+  const query = `DELETE from order_foods where order_id = $1 AND food_id = $2; `;
+  const {orderId, item_id} = req.params;
+
+  db.query(query, [orderId, item_id])
+    .then((data) => {
+    // check if order doesn't exist
+      if (data.rows.length === 0) {
+        return res.status(404).send();
+      }
+      res.redirect('/cart');
+    })
+    .catch((err) => {
+      res.status(400).send(err.message);
+    });
+});
+
+return router;
 

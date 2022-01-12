@@ -8,26 +8,83 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <!-- <link rel="stylesheet" href="/styles/main.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="../styles/cart.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="../scripts/cart.js"></script>
+
+  <!-- <script type="text/javascript" src="../scripts/updatecart.js"></script> -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"
+    integrity="sha512-aUhL2xOCrpLEuGD5f6tgHbLYEXRpYZ8G5yD+WlFrXrPy2IrWBlu6bih5C9H6qGsgqnU6mgx6KtU8TreHpASprw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+    integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 </head>
+<%- include('partials/_header') %>
 
 <body>
-  <div class="item-wrapper">
-    <a href="/food_items">see menu</a>
-    <% if (cartItems.length === 0) { %>
-      <p class="empty">You did not put any items in the cart yet.</p>
-    <% } %>
-    <% for(let item of cartItems) { %>
-      <div class="food-item">
-        <div class="item-information">
-          <h5 class="name"><%= item.name %></h5>
-          <p class="price">$<%= item.price %></p>
-          <p class="quantity">quantity: <%= item.quantity %></p>
-        </div>
-        <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
-      </div>
+  <h2 class="text-center">Current Order</h2>
+  <main class="container" id="cart">
+    <% let total=0; %>
+      <% for (let item of cart) { %>
+        <% total +=item.price * item.quantity; %>
+          <section class="card">
+            <div class="items card-body">
+              <span>
+                <span class="quantity" id="item-qty"><i class="fas fa-plus"></i>
+                  <%= item.quantity %> <i class="fas fa-minus"></i>
+                </span>
+                <span class="text-left" id="item">
+                  <%= item.name %>
+                </span>
+              </span>
+              <span class="price text-right">
+                $<%= item.price %>
+              </span>
+            </div>
+          </section>
+          <% } %>
+            <section class="totals card">
+              <div class="total card-body">
+                <span>Subtotal:</span>
+                <span id="cart-sub-total">
+                  <%= total.toLocaleString("en-US", {style:"currency", currency:"USD"}) %>
+                </span>
+              </div>
+              <div class="total card-body">
+                <span>Tax:</span>
+                <span id="cart-tax">
+                  <%= (total*0.13).toLocaleString("en-US", {style:"currency", currency:"USD"}) %>
+                </span>
+              </div>
+              <div class="total card-footer">
+                <span>Total:</span>
+                <span>
+                  <%= (total*1.13).toLocaleString("en-US", {style:"currency", currency:"USD"}) %>
+                </span>
+              </div>
+            </section>
+            <footer>
+              <button id="place Order" class="btn btn-dark">Place Order</button>
+              <button id="checkout" class="btn btn-dark">Checkout</button>
+            </footer>
+  </main>
     <% } %>
   </div>
 
