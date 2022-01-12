@@ -71,7 +71,4 @@ module.exports = (db) => {
   return router;
 };
 
-<<<<<<< HEAD:routes/customer_orders/customer.js
 
-=======
->>>>>>> 9d46cb979ff159a2fca5b984b912902c738d117f:routes/customer_orders/customer_orders.js
