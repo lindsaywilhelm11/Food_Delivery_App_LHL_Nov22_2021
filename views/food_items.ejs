@@ -3,7 +3,7 @@
 
 <head>
   <title>Menu</title>
-
+  
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <!-- <link rel="stylesheet" href="/styles/main.css" type="text/css" /> -->
@@ -14,6 +14,15 @@
 </head>
 
 <body>
+  <header>
+    <h3>Food App Name</h3>
+    <a href='/'>Home</a>
+    <a href='/food_items'>Menu</a>
+    <a href='/about'>About</a>
+    <a href='/login'>Login</a>
+    <a href='/carts'>Place An Order</a>
+    <!-- <a href='/register'>Register</a> -->
+  </header>
   <div class="item-wrapper">
     <a href="/carts">see cart</a>
     <% for(let item of foodItems) { %>
