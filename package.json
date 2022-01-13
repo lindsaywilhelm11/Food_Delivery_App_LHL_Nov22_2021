@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "start-al": "nodemon -e ejs,js,json --watch . -x 'npm run start'",
     "local": "nodemon -L --ignore public/",
     "db:reset": "node bin/resetdb.js"
   },

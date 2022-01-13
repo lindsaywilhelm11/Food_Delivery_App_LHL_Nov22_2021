@@ -10,51 +10,82 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <!-- <link rel="stylesheet" href="/styles/main.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 
 <body>
-  <header>
-    <h3>Food App Name</h3>
-    <a href='/'>Home</a>
-    <a href='/food_items'>Menu</a>
-    <a href='/about'>About</a>
-    <a href='/login'>Login</a>
-    <a href='/carts'>Place An Order</a>
-    <!-- <a href='/register'>Register</a> -->
-  </header>
-  <div class="header">
-    <a class="link" href="admin_orders/newitem">Create New Item</a>
-    <a class="link" href="admin_menu">Admin Menu</a>
-  </div>
-  <div class="orders-wrapper">
-    <%#= error %>
-    <% for(let order of adminOrders) { %>
-    <div class="order-information">
-      <h4 class="order-header">
-        <span class="order-id"><%= order.id %></span>
-        <span class="order-status"><%= order.status %></span>
-        <span class="order-name"><%= order.name %></span>
-        <span class="order-time"><%= order.time %></span>
-        <span class="order-totalprice">$<%= order.totalprice %></span>
-      </h4>
-      <% for(let item of order.items) { %>
-      <div class="food-detail">
-        <span class="food-item-name"><%= item.itemname %></span>
-        <span class="quantity"><%= item.quantity%></span>
-      </div>
-      <% } %>
+  <!-- ヘッダー -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Food App Name</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a href="#" class="nav-link">AdminOrders</a>
+        </li>
+        <li class="nav-item">
+          <a href="/food_items" class="nav-link">Menu</a>
+        </li>
+        <li class="nav-item">
+          <a href="admin_orders/newitem" class="nav-link">Create New Item</a>
+        </li>
+        <li class="nav-item">
+          <a href="admin_menu" class="nav-link">Admin Menu</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/login" class="nav-link">Login</a>
+        </li>
+      </ul>
     </div>
-    <select name="status">
-      <option value="new">NEW</option>
-      <option value="prep">PREPARING</option>
-      <option value="ready">READY!!</option>
-      <option value="comp">COMPLETE</option>
-    </select>
-    <% } %>
+  </nav>
+
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col">
+        <!-- 顧客のオーダー -->
+        <div class="orders-wrapper">
+          <%#= error %>
+          <% for(let order of adminOrders) { %>
+          <div class="order-information mb-2">
+            <h4 class="order-header">
+              <span class="order-id"><%= order.id %></span>
+              <select class="select-status" name="status">
+                <option value="new" <%= order.status == 'new' ? 'selected' : '' %>>NEW</option>
+                <option value="prep" <%= order.status == 'prep' ? 'selected' : '' %>>PREPARING</option>
+                <option value="ready" <%= order.status == 'ready' ? 'selected' : '' %>>READY!!</option>
+                <option value="complete" <%= order.status == 'complete' ? 'selected' : '' %>>COMPLETE</option>
+              </select>
+              <span class="order-name"><%= order.name %></span>
+              <span class="order-time"><%= order.time %></span>
+              <span class="order-totalprice">$<%= order.totalprice %></span>
+            </h4>
+            <hr>
+            <% for(let item of order.items) { %>
+            <div class="food-detail mb-4">
+              <span class="food-item-name"><%= item.itemname %></span>
+              <span class="quantity"><%= item.quantity%></span>
+            </div>
+            <% } %>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    $('.select-status').on('change', (event) => {
+      const id = $(event.currentTarget).parent().find('.order-id').text();
+      const status = event.currentTarget.value;
+      window.location.href = `/admin_orders/${id}/updatestatus/${status}`;
+    })
+  </script>
   <style>
     .order-information {
       border: solid 1px #ccc;
@@ -63,8 +94,7 @@
 
     .order-information .order-header {
       margin: 0;
-      border-bottom: solid 1px;
-      width: 18em;
+      width: 20em;
     }
 
     .food-detail {

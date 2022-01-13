@@ -18,11 +18,12 @@
 - [x] 新規アイテム追加画面へのリンク追加
 - [x] アイテムデータ削除
 
-
-- [ ] ステータス変更(new, prep, ready, complete)
-  - [ ] 最初はnew状態で表示される
-  - [ ] statusを更新するupdate sqlを考える
-  - [ ] statusを更新できるurlを作る
-  - [ ] 最初のボタンクリックでprepに変わる
+- [x] ステータス変更(new, prep, ready, complete)
+  - [x] 最初はnew状態で表示される
+  - [x] statusを更新するupdate sqlを考える
+  - [x] statusを更新できるurlを作る
+  - [x] セレクトボックスを変更するとDBのステータスが更新される
+  <!-- - [ ] 最初のボタンクリックでprepに変わる
   - [ ] 次のボタンクリックでready
-  - [ ] もう一回押したらcompleteになる
+  - [ ] もう一回押したらcompleteになる -->
+

@@ -10,7 +10,7 @@ module.exports = (db) => {
       FROM orders
       JOIN users ON user_id = users.id
       WHERE status != 'complete'
-      ORDER BY date;
+      ORDER BY date DESC;
       `)
       .then(headerSqlResultInfo => {
         const headerSqlResult = headerSqlResultInfo.rows;
@@ -80,14 +80,17 @@ module.exports = (db) => {
     })
   });
 
-  
-
-  // どのorderをupdateするのか判断するためにorder idを受け取んないといけない
-  router.get("/updatestatus", (req, res) => {
-    // todo implement;
-    // admin_ordersにリダイレクトできるといい
+  // To update status
+  router.get("/:id/updatestatus/:status", (req, res) => {
+    db.query (`
+      UPDATE orders
+      SET status = $2
+      WHERE id = $1;
+    `,[req.params.id, req.params.status])
+    .then(data => {
+         res.redirect("/admin_orders");
+    })
   });
-
   return router;
 };
 
