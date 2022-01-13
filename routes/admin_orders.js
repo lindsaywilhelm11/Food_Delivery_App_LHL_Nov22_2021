@@ -10,7 +10,7 @@ module.exports = (db) => {
       FROM orders
       JOIN users ON user_id = users.id
       WHERE status != 'complete'
-      ORDER BY date DESC;
+      ORDER BY date;
       `)
       .then(headerSqlResultInfo => {
         const headerSqlResult = headerSqlResultInfo.rows;
@@ -57,6 +57,10 @@ module.exports = (db) => {
       })
   });
 
+  // Show "create new item form" page to the browser
+  router.get("/newitem", (req, res) => {
+    res.render("item_new");
+  });
   // Recieve form data from item_new.ejs
   router.post("/newitem", (req, res) => {
     const name = req.body.new_item_name;
@@ -69,22 +73,19 @@ module.exports = (db) => {
     `, [name, price, desc, image])
     .then(data => {
       console.log(data);
-      res.redirect("/food_items");
+      res.redirect("/admin_menu");
     }) 
     .catch(error =>{
       res.status(500).json({error: error.message})
     })
   });
 
-  // Show "create new item form" page to the browser
-  router.get("/newitem", (req, res) => {
-    res.render("item_new");
-  });
+  
 
-  // どのorderをupdateするのか判断するためにorder id受け取んないといけない
+  // どのorderをupdateするのか判断するためにorder idを受け取んないといけない
   router.get("/updatestatus", (req, res) => {
     // todo implement;
-    // admin_ordersにリダイレクトできるといいね
+    // admin_ordersにリダイレクトできるといい
   });
 
   return router;
