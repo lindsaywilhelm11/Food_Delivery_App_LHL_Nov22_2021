@@ -3,28 +3,28 @@
 
 <head>
   <title>Menu</title>
-  
+
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="/styles/main.css" type="text/css" /> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+
+
 </head>
 
 <body>
   <header>
-    <h3>Food App Name</h3>
-    <a href='/'>Home</a>
-    <a href='/food_items'>Menu</a>
-    <a href='/about'>About</a>
-    <a href='/login'>Login</a>
-    <a href='/carts'>Place An Order</a>
+    <%- include header.ejs %>
   </header>
   
   <div class="item-wrapper">
-    <a href="/carts">see cart</a>
+
     <% for(let item of foodItems) { %>
       <div class="food-item">
         <div class="item-information">
@@ -35,9 +35,12 @@
         <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
         <form method="post" action="/carts">
           <input type="hidden" name="food_item_id" class="food-item-id-to-cart" value="<%= item.id %>" />
-          <button type="submit" class="add-button">add</button>
+          <button type="submit" class="add-button">Add</button>
         </form>
+        </div>
       </div>
+
+
     <% } %>
   </div>
 

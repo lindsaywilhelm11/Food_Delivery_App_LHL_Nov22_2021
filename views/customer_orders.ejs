@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-  <title>Menu</title>
+  <title>Admin Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -14,25 +16,19 @@
 </head>
 
 <body>
-  <div class="item-wrapper">
-    <a href="/customer_orders">see customer_orders</a>
-    <% for(let order of customer_orders) { %>
-      <div class="customer_orders">
-        <div class="item-information">
-          <h5 class="name"><%= item.name %></h>
-          <p class="desc"><%= item.description %></p>
-          <p class="price">$<%= item.price %></p>
-        </div>
-        <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
-        <form method="post" action="/customer_orders">
-          <input type="hidden" name="customer_orders_id" class="customer_orders-id-to-cart" value="<%= orders.id %>" />
-          <button type="submit" class="add-button">add</button>
-        </form>
+  <div class="orders-wrapper">
+    <% for(let order of customerOrders) { %>
+      <div class="order-information">
+        <h5 class="order-id"><%= order.order_id %></h>
+        <p class="customer_orders-id"><%= order.food_item_id %></p>
+        <p class="quantity"><%= order.quantity %></p>
       </div>
     <% } %>
+
+
+
   </div>
 
 </body>
 
 </html>
-
