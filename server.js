@@ -51,6 +51,7 @@ app.use(cookieParser());
 // const widgetsRoutes = require("./routes/widgets");
 const adminRoutes = require("./routes/admin_orders");
 const adminMenu = require("./routes/admin_menu");
+const adminPage = require("./routes/admin_page");
 const foodItemsRoutes = require("./routes/food_items");
 const cartsRoutes = require("./routes/carts");
 const aboutRoutes = require("./routes/about");
@@ -67,6 +68,7 @@ const thankYouRoutes = require("./routes/thank_you");
 
 app.use("/about", aboutRoutes);
 app.use("/login", loginRoutes);
+app.use("/admin_page", adminPage);
 app.use("/admin_orders", adminRoutes(db));
 app.use("/admin_menu", adminMenu(db));
 app.use("/food_items", foodItemsRoutes(db));
