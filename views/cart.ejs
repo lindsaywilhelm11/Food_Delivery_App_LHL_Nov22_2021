@@ -12,21 +12,57 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
 </head>
 <body>
+  <header>
+    <h3>Food App Name</h3>
+    <a href="/">Home</a>
+  <a href='/food_items'>Menu</a>
+  <a href='/about'>About</a>
+  <a href='/carts'>Place An Order</a>
+  <a href='/login'>Login</a>
+  <!-- <a href='/register'>Register</a> -->
+  <!-- <a href='/customer_orders'>customer_orders</a> -->
+  </header>
+  <br>
   <div class="item-wrapper">
-    <a href="/food_items">see menu</a>
+    <a href="/food_items">See Menu</a>
     <% if (cartItems.length === 0) { %>
       <p class="empty">You did not put any items in the cart yet.</p>
     <% } %>
-    <% for(let item of cartItems) { %>
+    <form method="post" action="/carts/place_order">
+    <% for (let item of cartItems) { %>
       <div class="food-item">
         <div class="item-information">
           <h5 class="name"><%= item.name %></h5>
           <p class="price">$<%= item.price %></p>
           <p class="quantity">quantity: <%= item.quantity %></p>
+
         </div>
         <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
+        <!-- <form method="post" action="/carts/<%= item %>/edit">
+          <input type="submit" name="addItem" value="+"/>
+        <button type="submit" name="reduceItem">-</button>
+        <form method="post" action="/carts/<%= item %>/delete">
+
+      </form> -->
+      <!-- </form> -->
       </div>
     <% } %>
+    <p>Total Cost: $</p>
+      <!-- <form method="post" action="/carts/place_order"> -->
+        <a href="/carts/delete" type="submit" name="delete" value="Clear Cart">Clear Cart</a>
+    <button type="submit" name="placeOrder">Place Your Order</button>
+    </form>
   </div>
+  <br>
+  <footer>
+    <a href='/'>Home</a>
+    <a href='/food_items'>Menu</a>
+    <a href='/about'>About</a>
+    <a href='/carts'>Place An Order</a>
+    <a href='/login'>Login</a>
+    <!-- <a href='/register'>Register</a> -->
+    <!-- <a href='/customer_orders'>customer_orders</a> -->
+    <p>© 2022 Suzumura, Sindhu, Wilhelm. All rights reserved.</p>
+  </footer>
 </body>
 </html>
