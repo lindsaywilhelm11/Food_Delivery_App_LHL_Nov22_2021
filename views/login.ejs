@@ -16,25 +16,19 @@
 </head>
 
 <body>
-  <header>
-    <%- include header.ejs %>
-  </header>
   <h1>Login</h1>
-  <form method="POST" action="/login">
-    <label>Name</label>
-    <input type="text">
-    <button type="submit" action="">Login</a></button>
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <button type="login" class="btn btn-primary">login</button>
   </form>
-
-  <footer>
-    <a href='/'>Home</a>
-    <a href='/food_items'>Menu</a>
-    <a href='/about'>About</a>
-    <a href='/carts'>Place An Order</a>
-    <a href='/login'>Login</a>
-    <!-- <a href='/register'>Register</a> -->
-    <p>© 2022 Suzumura, Sindhu, Wilhelm. All rights reserved.</p>
-  </footer>
 </body>
 
 </html>
+
+<p>© 2022 Suzumura, Sindhu, Wilhelm. All rights reserved.</p>
