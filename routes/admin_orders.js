@@ -57,6 +57,10 @@ module.exports = (db) => {
       })
   });
 
+  // Show "create new item form" page to the browser
+  router.get("/newitem", (req, res) => {
+    res.render("item_new");
+  });
   // Recieve form data from item_new.ejs
   router.post("/newitem", (req, res) => {
     const name = req.body.new_item_name;
@@ -69,24 +73,24 @@ module.exports = (db) => {
     `, [name, price, desc, image])
     .then(data => {
       console.log(data);
-      res.redirect("/food_items");
+      res.redirect("/admin_menu");
     }) 
     .catch(error =>{
       res.status(500).json({error: error.message})
     })
   });
 
-  // Show "create new item form" page to the browser
-  router.get("/newitem", (req, res) => {
-    res.render("item_new");
+  // To update status
+  router.get("/:id/updatestatus/:status", (req, res) => {
+    db.query (`
+      UPDATE orders
+      SET status = $2
+      WHERE id = $1;
+    `,[req.params.id, req.params.status])
+    .then(data => {
+         res.redirect("/admin_orders");
+    })
   });
-
-  // どのorderをupdateするのか判断するためにorder id受け取んないといけない
-  router.get("/updatestatus", (req, res) => {
-    // todo implement;
-    // admin_ordersにリダイレクトできるといいね
-  });
-
   return router;
 };
 
