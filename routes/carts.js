@@ -7,7 +7,7 @@ const client = require('twilio')(accountSid, authToken);
 // Cart
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    const cart = req.session.cart || {};
+    let cart = req.session.cart || {};
     const ids = Object.keys(cart);
     const cartItems = [];
     // console.log('cart', ids)
@@ -113,26 +113,12 @@ module.exports = (db) => {
           )
         })
         })
-
-
-      router.get("/delete", (req, res) => {
-        // const item = db[item]
-        // db.query(`DELETE FROM orders WHERE `)
-          // .then((data) => {
-          // // check if order doesn't exist
-          //   if (data.rows.length === 0) {
-          //     return res.status(404).send();
-          //   }
-          //   res.redirect('/cart');
-          // })
-          // .catch((err) => {
-          //   res.status(400).send(err.message);
-          // });
-          // cartItems = [];
-          req.session = null;
-          res.redirect('/food_items')
-      });
   });
+
+  router.get("/delete", (req, res) => {
+    req.session = [];
+    res.redirect('/food_items')
+});
 
   router.post("/", (req, res) => {
     let cart = {};

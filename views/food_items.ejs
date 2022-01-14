@@ -26,19 +26,20 @@
   <div class="item-wrapper">
 
     <% for(let item of foodItems) { %>
-      <div class="food-item">
-        <div class="item-information">
-          <h5 class="name"><%= item.name %></h>
-          <p class="desc"><%= item.description %></p>
-          <p class="price">$<%= item.price %></p>
-        </div>
-        <img class='item-image' src='<%= item.image %>' height="150px" width="200px"/>
-        <form method="post" action="/carts">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="<%= item.image %>" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= item.name %></h5>
+          <p class="card-text"><%= item.description %></p>
+          <form method="post" action="/carts">
           <input type="hidden" name="food_item_id" class="food-item-id-to-cart" value="<%= item.id %>" />
-          <button type="submit" class="add-button">Add</button>
+          <button type="submit" class="btn btn-primary">Add</button>
         </form>
         </div>
       </div>
+
+
+
 
 
     <% } %>
