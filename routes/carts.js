@@ -111,13 +111,12 @@ module.exports = (db) => {
                 to: '+15197885111'
               })
               .then(message => console.log(message.sid))
-              .then(res.redirect("/thank_you"))
-              .then(req.session.cart = null)
+              .then(req.session.cart = null, res.redirect("/thank_you"))
             )
           )
         })
         })
-      
+
       // router.post("/delete", (req, res) => {
       //   db.query (`
       //   DELETE FROM food_items WHERE id = $1;
@@ -125,14 +124,14 @@ module.exports = (db) => {
       //   .then(data => {
       //     console.log(data);
       //     res.redirect("/admin_menu");
-      //   }) 
+      //   })
       //   .catch(e => {
       //     res.render('admin_menu', {"error" : e})
       //   })
       // });
 
     });
-    
+
     router.get("/delete", (req, res) => {
       // const item = db[item]
       console.log(db);
