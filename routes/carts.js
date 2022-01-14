@@ -3,11 +3,12 @@ const router  = express.Router();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
-
+let session;
 // Cart
 module.exports = (db) => {
   router.get("/", (req, res) => {
     const cart = req.session.cart || {};
+    console.log("hi", cart);
     const ids = Object.keys(cart);
     const cartItems = [];
     // console.log('cart', ids)
@@ -29,6 +30,7 @@ module.exports = (db) => {
             Object.assign({}, item, { quantity })
           );
         }
+        console.log(cartItems);
         res.render('cart', {
           cartItems,
         });
@@ -82,6 +84,7 @@ module.exports = (db) => {
           ORDER BY id DESC;`, [cartTotalCost])
           .then(res => {
             const orderID = res.rows[0];
+            res.cookie('orderID', orderID);
           // we are looping through each individual item of the cart and creating an order detail of it
           // using the orderID that was returned from the search query and using individual cartItem.id and cartItem.quantity
             for (const cartItem of cartItems) {
@@ -109,30 +112,46 @@ module.exports = (db) => {
               })
               .then(message => console.log(message.sid))
               .then(res.redirect("/thank_you"))
+              .then(req.session.cart = null)
             )
           )
         })
         })
+      
+      // router.post("/delete", (req, res) => {
+      //   db.query (`
+      //   DELETE FROM food_items WHERE id = $1;
+      //   `, [req.params.id])
+      //   .then(data => {
+      //     console.log(data);
+      //     res.redirect("/admin_menu");
+      //   }) 
+      //   .catch(e => {
+      //     res.render('admin_menu', {"error" : e})
+      //   })
+      // });
 
-
-      router.get("/delete", (req, res) => {
-        // const item = db[item]
-        // db.query(`DELETE FROM orders WHERE `)
-          // .then((data) => {
-          // // check if order doesn't exist
-          //   if (data.rows.length === 0) {
-          //     return res.status(404).send();
-          //   }
-          //   res.redirect('/cart');
-          // })
-          // .catch((err) => {
-          //   res.status(400).send(err.message);
-          // });
-          // cartItems = [];
-          req.session = null;
-          res.redirect('/food_items')
-      });
-  });
+    });
+    
+    router.get("/delete", (req, res) => {
+      // const item = db[item]
+      console.log(db);
+      db.query(`UPDATE FROM orders SET status = canceled WHERE id = ?`)
+        .then((data) => {
+        // check if order doesn't exist
+          if (data.rows.length === 0) {
+            return res.status(404).send();
+          }
+          res.redirect('/cart');
+        })
+        .catch((err) => {
+          res.status(400).send(err.message);
+        });
+        cartItems = [];
+        req.session.cart = null;
+        console.log("hello", req.session, cartItems)
+        res.redirect('/food_items')
+    });
 
   router.post("/", (req, res) => {
     let cart = {};
@@ -144,6 +163,7 @@ module.exports = (db) => {
     }
     cart[req.body.food_item_id]++;
     req.session.cart = cart;
+    res.cookie("session", JSON.stringify(req.session))
     res.redirect('food_items');
   });
   return router;
