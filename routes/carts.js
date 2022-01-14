@@ -106,8 +106,8 @@ module.exports = (db) => {
 
             client.messages
               .create({
-                body: 'Your order has been received and will be ready in 5 minutes!',
-                from: '+13658000732', //(365) 800-0732
+                body: 'Your order has been received and will be ready in 15 minutes!',
+                from: '+12262417942', //(226) 241-7942
                 to: '+15197885111'
               })
               .then(message => console.log(message.sid))
