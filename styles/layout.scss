@@ -5,6 +5,8 @@ html {
   margin: 0;
 }
 
+
+
 nav {
   height: 100px;
   background-color: #0d6efd;
@@ -35,15 +37,15 @@ div#navbar {
   font-size: 18pt;
 }
 
-footer {
-  display: flex;
-  width: 100%;
-  position: fixed;
-  bottom: 0px;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-}
+// footer {
+//   display: flex;
+//   width: 100%;
+//   position: fixed;
+//   bottom: 0px;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: black;
+// }
 
 #backtotop {
   background-color: black;
