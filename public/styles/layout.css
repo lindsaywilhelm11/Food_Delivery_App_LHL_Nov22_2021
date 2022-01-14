@@ -34,16 +34,6 @@ div#navbar {
   font-size: 18pt;
 }
 
-footer {
-  display: flex;
-  width: 100%;
-  position: fixed;
-  bottom: 0px;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-}
-
 #backtotop {
   background-color: black;
 }

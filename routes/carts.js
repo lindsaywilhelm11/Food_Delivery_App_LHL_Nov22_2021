@@ -131,11 +131,13 @@ module.exports = (db) => {
       // });
 
     });
-
+    // UPDATE FROM orders SET status = canceled WHERE id = ?
     router.get("/delete", (req, res) => {
       // const item = db[item]
       console.log(db);
-      db.query(`UPDATE FROM orders SET status = canceled WHERE id = ?`)
+      db.query(`
+       DELETE FROM food_items WHERE id = $1;
+      `)
         .then((data) => {
         // check if order doesn't exist
           if (data.rows.length === 0) {

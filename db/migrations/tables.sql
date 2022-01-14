@@ -16,7 +16,7 @@ CREATE TABLE food_items (
   name VARCHAR(255) NOT NULL,
   price INTEGER NOT NULL DEFAULT 0,
   description TEXT,
-  image VARCHAR(255) NOT NULL
+  image TEXT NOT NULL
 );
 
 CREATE TABLE orders (
