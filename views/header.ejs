@@ -1,3 +1,15 @@
+<style>
+  .right-menu{
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    /* top: 0; */
+    /* width: 200px; */
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: row;
+  }
+</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Coffee Day</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,12 +30,14 @@
       <a class="nav-link" href='/carts'>place an Order</a>
     </li>
   </li>
+  <div class="right-menu">
   <li class="nav-item">
     <a class="nav-link" href='/login'>Login</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href='/Register'>Register</a>
   </li>
+</div>
 
     </ul>
 

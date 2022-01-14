@@ -5,3 +5,46 @@ html {
   margin: 0;
 }
 
+nav {
+  height: 100px;
+  background-color: #0d6efd;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 2 em;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  flex-flow: column wrap;
+  z-index: 1;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  color: white;
+ }
+
+div#title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 24pt;
+}
+div#navbar {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  font-size: 18pt;
+}
+
+footer {
+  display: flex;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+#backtotop {
+  background-color: black;
+}
