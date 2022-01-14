@@ -153,6 +153,11 @@ module.exports = (db) => {
         res.redirect('/food_items')
     });
 
+  router.get("/delete", (req, res) => {
+    req.session = [];
+    res.redirect('/food_items')
+});
+
   router.post("/", (req, res) => {
     let cart = {};
     if (req.session.cart) {
